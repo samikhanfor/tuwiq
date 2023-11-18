@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Cats>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form method="post" asp-action="index" asp-controller="Home">
+        <input name="search" placeholder="Search" /><input type="submit" name="Find" />
+    </form><br />
+    <h3 class="alert-info rounded rounded-4 shadow">Add Cat</h3>
+    <div class="container text-left">
+    <form method="post" asp-action="CreateCat" asp-controller="Home">
+            <div class="row">
+                <div class="col-sm-4">name:<input name="name" /></div>
+                <div class="col-sm-4">Birth Date:<input name="Dbirth" /></div>
+                <div class="col-sm-4">Price:<input name="Price" /></div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">Description:<input  name="Description" /></div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12"><input type="submit" name="submit" /></div>
+            </div>
+
+        </form> </div>
+        </div>
+
+
+    </div>
+    <div class="container bg-info rounded-3 text-center">
+        <div class="row  p-3">
+            @{
+                // افترض أن لديك متغير item يحمل معلومات العنصر الحالي
+                var imagePath = $"wwwroot/images/";
+            }
+
+    @foreach(var item in Model)
+    {
+                        var image = item.Id + ".jpg";
+                if (System.IO.File.Exists(imagePath+image)==false)
+                {
+                    image = "0.jpg";
+                }
+
+                <div class="col-sm p-3 m-3 bg-light border border-4 border-secondary rounded-3">
+                    <img src="images/@image" class="rounded-circle" style="width:100px;height:100px;">
+                    <h3>@item.Name</h3>
+                    <p>@item.Description</p>
+                    <button class="btn btn-success  btn-lg rounded-pill" onclick="window.location.href='register.html';">تبنى</button>
+                    <br /><a asp-action="Delete" asp-route-id="@item.Id">Delete Me!</a> | <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                </div>
+    }
+        </div>
+    </div>
+
+</div>
